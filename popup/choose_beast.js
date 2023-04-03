@@ -50,3 +50,13 @@ const listenForClicks = () => {
   });
 };
 
+const reportExecuteScriptError = (error) => {
+  document.querySelector("#popup-content").classList.add("hidden");
+  document.querySelector("#error-content").classList.remove("hidden");
+  console.error(`Failed to execute beastify content script ${error.message}`);
+};
+
+browser.tabs
+  .executeScript({ file: "/content_scripts/beastify.js" })
+  .then(listenForClicks)
+  .catch(reportExecuteScriptError);
